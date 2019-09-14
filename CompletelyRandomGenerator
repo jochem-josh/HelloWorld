@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class MelodyGenerator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("How long do you want the song to be?");
+        int musicLength = scanner.nextInt();
+        double randomDoub;
+        for (int i = 0; i < musicLength; i++) {
+
+            randomDoub = Math.random();
+
+            if (randomDoub <= 0.13) {
+                //chord 1 method
+                System.out.println("1");
+            } else if (randomDoub > 0.13 && randomDoub <= 0.26) {
+                //chord 2 method
+                System.out.println("2");
+            } else if (randomDoub > 0.26 && randomDoub <= 0.34) {
+                //chord 3 method
+                System.out.println("3");
+            } else if (randomDoub > 0.34 && randomDoub <= 0.54) {
+                //chord 4 method
+                System.out.println("4");
+            } else if (randomDoub > 0.54 && randomDoub <= 0.74) {
+                //chord 5 method
+                System.out.println("5");
+            } else if (randomDoub > 0.74 && randomDoub <= 0.87) {
+                //chord 6 method
+                System.out.println("6");
+            } else if (randomDoub > 0.87 && randomDoub <= 1.00) {
+                //chord 7 method
+                System.out.println("7");
+            } else {
+                System.out.println("this shouldn't happen");
+            }
+        }
+    }
+}

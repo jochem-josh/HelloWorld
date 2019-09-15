@@ -39,7 +39,7 @@ public class StructuredMelodyPlayer {
     public void play() throws InterruptedException {
         synth = JSyn.createSynthesizer();  // Create a context for the synthesizer.
 
-        synth.add( ugen = new SineOscillator() ); //tone generator
+        synth.add(ugen = new SineOscillator()); //tone generator
 
         voice = (UnitVoice) ugen;
 
@@ -78,25 +78,86 @@ public class StructuredMelodyPlayer {
         String keyNote = scanner.nextLine();
         double key = 0.0;
 
+        boolean isMajor;
+
+        if (keyNote.equals("C Major")) {
+            key = 261.63;
+            isMajor = true;
+        } else if (keyNote.equals("C# Major") || keyNote.equals("Db Major")) {
+            key = 277.18;
+            isMajor = true;
+        } else if (keyNote.equals("D Major")) {
+            key = 293.66;
+            isMajor = true;
+        } else if (keyNote.equals("D# Major") || keyNote.equals("Eb Major")) {
+            key = 311.13;
+            isMajor = true;
+        } else if (keyNote.equals("E Major")) {
+            key = 329.63;
+            isMajor = true;
+        } else if (keyNote.equals("F Major")) {
+            key = 349.23;
+            isMajor = true;
+        } else if (keyNote.equals("F# Major") || keyNote.equals("Gb Major")) {
+            key = 369.99;
+            isMajor = true;
+        } else if (keyNote.equals("G Major")) {
+            key = 392.0;
+            isMajor = true;
+        } else if (keyNote.equals("G# Major") || keyNote.equals("Ab Major")) {
+            key = 415.3;
+            isMajor = true;
+        } else if (keyNote.equals("A Major")) {
+            key = 440.0;
+            isMajor = true;
+        } else if (keyNote.equals("A# Major") || keyNote.equals("Bb Major")) {
+            key = 466.16;
+            isMajor = true;
+        } else if (keyNote.equals("B Major")) {
+            key = 493.88;
+            isMajor = true;
+        } else if (keyNote.equals("C Minor")) {
+            key = 261.63;
+            isMajor = false;
+        } else if (keyNote.equals("C# Minor") || keyNote.equals("Db Minor")) {
+            key = 277.18;
+            isMajor = false;
+        } else if (keyNote.equals("D Minor")) {
+            key = 293.66;
+            isMajor = false;
+        } else if (keyNote.equals("D# Minor") || keyNote.equals("Eb Minor")) {
+            key = 311.13;
+            isMajor = false;
+        } else if (keyNote.equals("E Minor")) {
+            key = 329.63;
+            isMajor = false;
+        } else if (keyNote.equals("F Minor")) {
+            key = 349.23;
+            isMajor = false;
+        } else if (keyNote.equals("F# Minor") || keyNote.equals("Gb Minor")) {
+            key = 369.99;
+            isMajor = false;
+        } else if (keyNote.equals("G Minor")) {
+            key = 392.0;
+            isMajor = false;
+        } else if (keyNote.equals("G# Minor") || keyNote.equals("Ab Minor")) {
+            key = 415.3;
+            isMajor = false;
+        } else if (keyNote.equals("A Minor")) {
+            key = 440.0;
+            isMajor = false;
+        } else if (keyNote.equals("A# Minor") || keyNote.equals("Bb Minor")) {
+            key = 466.16;
+            isMajor = false;
+        } else if (keyNote.equals("B Minor")) {
+            key = 493.88;
+            isMajor = false;
+        } else System.out.println("We love Canada!!!!!!!");
+
         System.out.println("Choose the tempo (65.0-600.0");
         double BPM = scanner.nextDouble();
-        BPM = 60000/BPM;
-        long tempo = (long)BPM;
-
-        if (keyNote.equals("C")) key = 261.63;
-        else if (keyNote.equals("C#") || keyNote.equals("Db")) key = 277.18;
-        else if (keyNote.equals("D")) key = 293.66;
-        else if (keyNote.equals("D#") || keyNote.equals("Eb")) key = 311.13;
-        else if (keyNote.equals("E")) key = 329.63;
-        else if (keyNote.equals("F")) key = 349.23;
-        else if (keyNote.equals("F#") || keyNote.equals("Gb")) key = 369.99;
-        else if (keyNote.equals("G")) key = 392.0;
-        else if (keyNote.equals("G#") || keyNote.equals("Ab")) key = 415.3;
-        else if (keyNote.equals("A")) key = 440.0;
-        else if (keyNote.equals("A#") || keyNote.equals("Bb")) key = 466.16;
-        else if (keyNote.equals("B")) key = 493.88;
-        else System.out.println("We love Canada!!!!!!!");
-
+        BPM = 60000 / BPM;
+        long tempo = (long) BPM;
 
         if (startingChord == 1) chord = 1;
         else if (startingChord == 2) chord = 2;
@@ -117,95 +178,190 @@ public class StructuredMelodyPlayer {
             else chord = 7;
         }
 
-        for (int i = 0; i < musicLength; i++) {
-            // this if loops ensures that the last note will always be C
-            if (i == musicLength - 1) {
-                chord = 1;
-            }
-            switch (chord) {
-                case 1: {
-                    freq = key;
-                    System.out.println("C");
-                    randomDouble = Math.random();
-                    if (randomDouble <= 0.13) chord = 1;
-                    else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
-                    else if (randomDouble > 0.26 && randomDouble <= 0.34) chord = 3;
-                    else if (randomDouble > 0.34 && randomDouble <= 0.54) chord = 4;
-                    else if (randomDouble > 0.54 && randomDouble <= 0.74) chord = 5;
-                    else if (randomDouble > 0.74 && randomDouble <= 0.87) chord = 6;
-                    else chord = 7;
-                    if (i == musicLength-2) //ensures proper chord progression
-                    {
-                        if (randomDouble<=0.50) chord = 5;
-                        else chord = 7;
-                    }
-                    break;
-                }
-                case 2: {
-                    freq = key * 1.12;
-                    System.out.println("D");
-                    randomDouble = Math.random();
-                    if (randomDouble<=0.50) chord = 5;
-                    else chord = 7;
-                    break;
-                }
-                case 3: {
-                    freq = key * 1.26;
-                    System.out.println("E");
-                    randomDouble = Math.random();
-                    if (randomDouble<=0.50) chord = 4;
-                    else chord = 6;
-                    if (i == musicLength-3) //ensures proper chord progression
-                    {
-                        chord = 4;
-                    }
-                    break;
-                }
-                case 4: {
-                    freq = key * 1.33;
-                    System.out.println("F");
-                    randomDouble = Math.random();
-                    if (randomDouble<=0.33) chord = 2;
-                    else if (randomDouble<=0.66) chord = 7;
-                    else chord =5;
-                    if (i == musicLength-2) //ensures proper chord progression
-                    {
-                        if (randomDouble<=0.50) chord = 5;
-                        else chord = 7;
-                    }
-                    break;
-                }
-                case 5: {
-                    freq = key * 1.50;
-                    System.out.println("G");
-                    randomDouble = Math.random();
-                    if (randomDouble<=0.50) chord = 1;
-                    else chord = 6;
-                    break;
-                }
-                case 6: {
-                    freq = key * 1.68;
-                    System.out.println("A");
-                    randomDouble = Math.random();
-                    if (randomDouble<=0.50) chord = 2;
-                    else chord = 4;
-                    break;
-                }
-                case 7: {
-                    freq = key * 1.89 ;
-                    System.out.println("B");
+        if (isMajor = true) 
+        {
+            for (int i = 0; i < musicLength; i++) {
+                // this if loops ensures that the last note will always be C
+                if (i == musicLength - 1) {
                     chord = 1;
-                    break;
                 }
-                default: {
-                    System.out.println("We love Canada!!!!!");
+                switch (chord) {
+                    case 1: {
+                        freq = key;
+                        System.out.println("C");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.13) chord = 1;
+                        else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
+                        else if (randomDouble > 0.26 && randomDouble <= 0.34) chord = 3;
+                        else if (randomDouble > 0.34 && randomDouble <= 0.54) chord = 4;
+                        else if (randomDouble > 0.54 && randomDouble <= 0.74) chord = 5;
+                        else if (randomDouble > 0.74 && randomDouble <= 0.87) chord = 6;
+                        else chord = 7;
+                        if (i == musicLength - 2) //ensures proper chord progression
+                        {
+                            if (randomDouble <= 0.50) chord = 5;
+                            else chord = 7;
+                        }
+                        break;
+                    }
+                    case 2: {
+                        freq = key * 1.12;
+                        System.out.println("D");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 5;
+                        else chord = 7;
+                        break;
+                    }
+                    case 3: {
+                        freq = key * 1.26;
+                        System.out.println("E");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 4;
+                        else chord = 6;
+                        if (i == musicLength - 3) //ensures proper chord progression
+                        {
+                            chord = 4;
+                        }
+                        break;
+                    }
+                    case 4: {
+                        freq = key * 1.33;
+                        System.out.println("F");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.33) chord = 2;
+                        else if (randomDouble <= 0.66) chord = 7;
+                        else chord = 5;
+                        if (i == musicLength - 2) //ensures proper chord progression
+                        {
+                            if (randomDouble <= 0.50) chord = 5;
+                            else chord = 7;
+                        }
+                        break;
+                    }
+                    case 5: {
+                        freq = key * 1.50;
+                        System.out.println("G");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 1;
+                        else chord = 6;
+                        break;
+                    }
+                    case 6: {
+                        freq = key * 1.68;
+                        System.out.println("A");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 2;
+                        else chord = 4;
+                        break;
+                    }
+                    case 7: {
+                        freq = key * 1.89;
+                        System.out.println("B");
+                        chord = 1;
+                        break;
+                    }
+                    default: {
+                        System.out.println("We love Canada!!!!!");
+                    }
                 }
+                timeStamp = timeStamp.makeRelative(duration);
+                voice.noteOn(freq, 0.5, timeStamp);
+                Thread.sleep(tempo);
             }
-            timeStamp = timeStamp.makeRelative(duration);
-            voice.noteOn(freq, 0.5, timeStamp );
-            Thread.sleep(tempo);
         }
-        voice.noteOff(timeStamp.makeRelative(onTime));
+        
+        else
+        {
+            for (int i = 0; i < musicLength; i++) {
+                // this if loops ensures that the last note will always be C
+                if (i == musicLength - 1) {
+                    chord = 1;
+                }
+                switch (chord) {
+                    case 6: {
+                        freq = key;
+                        System.out.println("C");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.13) chord = 1;
+                        else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
+                        else if (randomDouble > 0.26 && randomDouble <= 0.34) chord = 3;
+                        else if (randomDouble > 0.34 && randomDouble <= 0.54) chord = 4;
+                        else if (randomDouble > 0.54 && randomDouble <= 0.74) chord = 5;
+                        else if (randomDouble > 0.74 && randomDouble <= 0.87) chord = 6;
+                        else chord = 7;
+                        if (i == musicLength - 2) //ensures proper chord progression
+                        {
+                            if (randomDouble <= 0.50) chord = 5;
+                            else chord = 7;
+                        }
+                        break;
+                    }
+                    case 7: {
+                        freq = key * 1.12;
+                        System.out.println("D");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 5;
+                        else chord = 7;
+                        break;
+                    }
+                    case 1: {
+                        freq = key * 1.26;
+                        System.out.println("E");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 4;
+                        else chord = 6;
+                        if (i == musicLength - 3) //ensures proper chord progression
+                        {
+                            chord = 4;
+                        }
+                        break;
+                    }
+                    case 2: {
+                        freq = key * 1.33;
+                        System.out.println("F");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.33) chord = 2;
+                        else if (randomDouble <= 0.66) chord = 7;
+                        else chord = 5;
+                        if (i == musicLength - 2) //ensures proper chord progression
+                        {
+                            if (randomDouble <= 0.50) chord = 5;
+                            else chord = 7;
+                        }
+                        break;
+                    }
+                    case 3: {
+                        freq = key * 1.50;
+                        System.out.println("G");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 1;
+                        else chord = 6;
+                        break;
+                    }
+                    case 4: {
+                        freq = key * 1.68;
+                        System.out.println("A");
+                        randomDouble = Math.random();
+                        if (randomDouble <= 0.50) chord = 2;
+                        else chord = 4;
+                        break;
+                    }
+                    case 5: {
+                        freq = key * 1.89;
+                        System.out.println("B");
+                        chord = 1;
+                        break;
+                    }
+                    default: {
+                        System.out.println("We love Canada!!!!!");
+                    }
+                }
+                timeStamp = timeStamp.makeRelative(duration);
+                voice.noteOn(freq, 0.5, timeStamp);
+                Thread.sleep(tempo);
+            }
+            voice.noteOff(timeStamp.makeRelative(onTime));
+        }
     }
     public static void main(String[] args) throws InterruptedException {
         new StructuredMelodyPlayer().play();

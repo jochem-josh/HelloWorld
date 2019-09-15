@@ -1,0 +1,163 @@
+package com.jsyn.examples;
+import com.jsyn.JSyn;
+import com.jsyn.Synthesizer;
+import com.jsyn.unitgen.*;
+import com.softsynth.shared.time.TimeStamp;
+import java.util.Scanner;
+
+public class StructuredMelodyPlayer {
+    private Synthesizer synth;
+    private UnitGenerator ugen;
+    private UnitVoice voice;
+    private LineOut lineOut;
+
+    public void play() throws InterruptedException {
+        synth = JSyn.createSynthesizer();  // Create a context for the synthesizer.
+
+        synth.add( ugen = new SineOscillator() ); //tone generator
+
+        voice = (UnitVoice) ugen;
+
+        // Add an output mixer.
+        synth.add(lineOut = new LineOut());
+
+        // Connect the oscillator to the left and right audio output.
+        voice.getOutput().connect(0, lineOut.input, 0);
+        voice.getOutput().connect(0, lineOut.input, 1);
+
+        double timeNow = synth.getCurrentTime();// Get synthesizer time in seconds.
+        // Advance to a near future time so we have a clean start.
+        TimeStamp timeStamp = new TimeStamp(timeNow);
+        // We only need to start the LineOut. It will pull data from the oscillator
+        synth.startUnit(lineOut, timeStamp);
+        // Schedule a note on and off.
+        double freq = 200.0; // hertz
+        double duration = 0.5;
+        double onTime = 1.0;
+
+        synth.start();// Start synthesizer using default stereo output at 44100 Hz.
+        voice.noteOn(1, 0.5, timeStamp); //prevents synth from making noise before commanded
+        Scanner scanner = new Scanner(System.in); //setting up scanner object
+        double randomDouble = Math.random(); //random number generator
+        int chord; // determines what chord will be played next
+
+        System.out.println("How long do you want the song to be?"); //prompt
+        int musicLength = scanner.nextInt(); //how long the song is
+
+        System.out.println("What chord number would you like to start on?");
+        System.out.println("If you don't want to choose type enter.");
+        int startingChord = scanner.nextInt();
+
+        if (startingChord == 1) chord = 1;
+        else if (startingChord == 2) chord = 2;
+        else if (startingChord == 3) chord = 3;
+        else if (startingChord == 4) chord = 4;
+        else if (startingChord == 5) chord = 5;
+        else if (startingChord == 6) chord = 6;
+        else if (startingChord == 7) chord = 7;
+
+        else {
+            // the following if/else statements determine what the first note will be
+            if (randomDouble <= 0.13) chord = 1;
+            else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
+            else if (randomDouble > 0.26 && randomDouble <= 0.34) chord = 3;
+            else if (randomDouble > 0.34 && randomDouble <= 0.54) chord = 4;
+            else if (randomDouble > 0.54 && randomDouble <= 0.74) chord = 5;
+            else if (randomDouble > 0.74 && randomDouble <= 0.87) chord = 6;
+            else chord = 7;
+        }
+
+        for (int i = 0; i < musicLength; i++) {
+            // this if loops ensures that the last note will always be C
+            if (i == musicLength - 1) {
+                chord = 1;
+            }
+            switch (chord) {
+                case 1: {
+                    freq = 261.63;
+                    System.out.println("C");
+                    randomDouble = Math.random();
+                    if (randomDouble <= 0.13) chord = 1;
+                    else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
+                    else if (randomDouble > 0.26 && randomDouble <= 0.34) chord = 3;
+                    else if (randomDouble > 0.34 && randomDouble <= 0.54) chord = 4;
+                    else if (randomDouble > 0.54 && randomDouble <= 0.74) chord = 5;
+                    else if (randomDouble > 0.74 && randomDouble <= 0.87) chord = 6;
+                    else chord = 7;
+                    if (i == musicLength-2) //ensures proper chord progression
+                    {
+                        if (randomDouble<=0.50) chord = 5;
+                        else chord = 7;
+                    }
+                    break;
+                }
+                case 2: {
+                    freq = 293.66;
+                    System.out.println("D");
+                    randomDouble = Math.random();
+                    if (randomDouble<=0.50) chord = 5;
+                    else chord = 7;
+                    break;
+                }
+                case 3: {
+                    freq = 329.63;
+                    System.out.println("E");
+                    randomDouble = Math.random();
+                    if (randomDouble<=0.50) chord = 4;
+                    else chord = 6;
+                    if (i == musicLength-3) //ensures proper chord progression
+                    {
+                        chord = 4;
+                    }
+                    break;
+                }
+                case 4: {
+                    freq = 349.23;
+                    System.out.println("F");
+                    randomDouble = Math.random();
+                    if (randomDouble<=0.33) chord = 2;
+                    else if (randomDouble<=0.66) chord = 7;
+                    else chord =5;
+                    if (i == musicLength-2) //ensures proper chord progression
+                    {
+                        if (randomDouble<=0.50) chord = 5;
+                        else chord = 7;
+                    }
+                    break;
+                }
+                case 5: {
+                    freq = 392;
+                    System.out.println("G");
+                    randomDouble = Math.random();
+                    if (randomDouble<=0.50) chord = 1;
+                    else chord = 6;
+                    break;
+                }
+                case 6: {
+                    freq = 440;
+                    System.out.println("A");
+                    randomDouble = Math.random();
+                    if (randomDouble<=0.50) chord = 2;
+                    else chord = 4;
+                    break;
+                }
+                case 7: {
+                    freq = 493.88;
+                    System.out.println("B");
+                    chord = 1;
+                    break;
+                }
+                default: {
+                    System.out.println("this shouldn't happen");
+                }
+            }
+            timeStamp = timeStamp.makeRelative(duration);
+            voice.noteOn(freq, 0.5, timeStamp );
+            Thread.sleep(400);
+        }
+        voice.noteOff(timeStamp.makeRelative(onTime));
+    }
+    public static void main(String[] args) throws InterruptedException {
+        new StructuredMelodyPlayer().play();
+    }
+}

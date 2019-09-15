@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/z2"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:onClick="startNote2"
+        android:text="2"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="533dp" />
+
+    <Button
+        android:id="@+id/z7"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:onClick="startNote7"
+        android:text="7"
+        tools:layout_editor_absoluteX="330dp"
+        tools:layout_editor_absoluteY="533dp" />
+
+    <Button
+        android:id="@+id/z4"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:text="4"
+        android:onClick="startNote4"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="533dp" />
+
+    <Button
+        android:id="@+id/z6"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:text="6"
+        android:onClick="startNote6"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="533dp" />
+
+    <Button
+        android:id="@+id/z5"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:text="5"
+        android:onClick="startNote5"
+        tools:layout_editor_absoluteX="230dp"
+        tools:layout_editor_absoluteY="533dp" />
+
+    <Button
+        android:id="@+id/z3"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:text="3"
+        android:onClick="startNote3"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="533dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="352dp"
+        android:layout_height="42dp"
+        android:text="What Major key do you want to generate in?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="491dp" />
+
+    <Button
+        android:id="@+id/z1"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:text="1"
+        android:onClick="startNote1"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="533dp" />
+
+    <Button
+        android:id="@+id/E"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:onClick="keyOfEF"
+        android:text="E♭"
+        app:layout_constraintEnd_toEndOf="@+id/B"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <Button
+        android:id="@+id/B"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:onClick="keyOfBF"
+        android:text="B♭"
+        app:layout_constraintEnd_toEndOf="@+id/F"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <Button
+        android:id="@+id/F"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:onClick="keyOfF"
+        android:text="F"
+        app:layout_constraintEnd_toEndOf="@+id/C"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <Button
+        android:id="@+id/C"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:onClick="keyOfC"
+        android:text="C"
+        app:layout_constraintEnd_toEndOf="@+id/G"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <Button
+        android:id="@+id/G"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:onClick="keyOfG"
+        android:text="G"
+        tools:layout_editor_absoluteX="230dp"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <Button
+        android:id="@+id/D"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:text="D"
+        android:onClick="keyOfD"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <Button
+        android:id="@+id/"
+        android:layout_width="50"
+        android:layout_height="50"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:onClick="keyOfA"
+        android:text="A"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="352dp"
+        android:layout_height="42dp"
+        android:text="What Major key do you want to generate in?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="404dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:text="Generate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="73dp"
+        android:onClick="Melogen"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="0dp"></LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

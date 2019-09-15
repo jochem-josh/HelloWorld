@@ -19,7 +19,7 @@
  * The purpose of this program is to randomly generate a melody adherent to the rules of
  * music theory within a given key and a given length.
  *
- * Authors: Joshua Jochem, Zachariah Hunt, Angela Kime, Jisoo Kim, and Sangjun Park
+ * Authors: Joshua Jochem, Zachariah Hunt, Angela Kim, Jisoo Kim, and Sangjun Park
  *
  * September 15, 2019
  */
@@ -36,6 +36,9 @@ public class StructuredMelodyPlayer {
     private UnitVoice voice;
     private LineOut lineOut;
 
+/* This method must be written outside of the main because it contains non-static variables that can't be
+ * referenced in a static context.
+ */
     public void play() throws InterruptedException {
         synth = JSyn.createSynthesizer();  // Create a context for the synthesizer.
 
@@ -51,7 +54,6 @@ public class StructuredMelodyPlayer {
         voice.getOutput().connect(0, lineOut.input, 1);
 
         double timeNow = synth.getCurrentTime();// Get synthesizer time in seconds.
-        // Advance to a near future time so we have a clean start.
         TimeStamp timeStamp = new TimeStamp(timeNow);
         // We only need to start the LineOut. It will pull data from the oscillator
         synth.startUnit(lineOut, timeStamp);
@@ -66,98 +68,103 @@ public class StructuredMelodyPlayer {
         double randomDouble = Math.random(); //random number generator
         int chord; // determines what chord will be played next
 
-        System.out.println("How long do you want the song to be?"); //prompt
+        System.out.println("How many notes would you like the song to be?");
         int musicLength = scanner.nextInt(); //how long the song is
 
-        System.out.println("What chord number would you like to start on?");
-        System.out.println("If you don't want to choose type enter.");
+        System.out.println("What chord number would you like to start on? (1-7)");
+        System.out.println("If you would like a random chord, type '8' ");
         int startingChord = scanner.nextInt();
         scanner.nextLine();
 
         System.out.println("What key would you like to be in?");
-        String keyNote = scanner.nextLine();
+        String keyNote = scanner.nextLine().toLowerCase();
         double key = 0.0;
 
-        boolean isMajor;
+        boolean isMajor; //determines whether the song is in a major or minor key
 
-        if (keyNote.equals("C Major")) {
+        // The frequency is decided here based on key
+        if (keyNote.equals("c major")) {
             key = 261.63;
             isMajor = true;
-        } else if (keyNote.equals("C# Major") || keyNote.equals("Db Major")) {
+        } else if (keyNote.equals("c# major") || keyNote.equals("db major")) { //these keys are technically the same frequency
             key = 277.18;
             isMajor = true;
-        } else if (keyNote.equals("D Major")) {
+        } else if (keyNote.equals("d major")) {
             key = 293.66;
             isMajor = true;
-        } else if (keyNote.equals("D# Major") || keyNote.equals("Eb Major")) {
+        } else if (keyNote.equals("d# major") || keyNote.equals("eb major")) {
             key = 311.13;
             isMajor = true;
-        } else if (keyNote.equals("E Major")) {
+        } else if (keyNote.equals("e major")) {
             key = 329.63;
             isMajor = true;
-        } else if (keyNote.equals("F Major")) {
+        } else if (keyNote.equals("f major")) {
             key = 349.23;
             isMajor = true;
-        } else if (keyNote.equals("F# Major") || keyNote.equals("Gb Major")) {
+        } else if (keyNote.equals("f# major") || keyNote.equals("gb major")) {
             key = 369.99;
             isMajor = true;
-        } else if (keyNote.equals("G Major")) {
+        } else if (keyNote.equals("g major")) {
             key = 392.0;
             isMajor = true;
-        } else if (keyNote.equals("G# Major") || keyNote.equals("Ab Major")) {
+        } else if (keyNote.equals("g# major") || keyNote.equals("ab major")) {
             key = 415.3;
             isMajor = true;
-        } else if (keyNote.equals("A Major")) {
+        } else if (keyNote.equals("a major")) {
             key = 440.0;
             isMajor = true;
-        } else if (keyNote.equals("A# Major") || keyNote.equals("Bb Major")) {
+        } else if (keyNote.equals("a# major") || keyNote.equals("bb major")) {
             key = 466.16;
             isMajor = true;
-        } else if (keyNote.equals("B Major")) {
+        } else if (keyNote.equals("b major")) {
             key = 493.88;
             isMajor = true;
-        } else if (keyNote.equals("C Minor")) {
+        } else if (keyNote.equals("c minor")) {
             key = 261.63;
             isMajor = false;
-        } else if (keyNote.equals("C# Minor") || keyNote.equals("Db Minor")) {
+        } else if (keyNote.equals("c# minor") || keyNote.equals("db minor")) {
             key = 277.18;
             isMajor = false;
-        } else if (keyNote.equals("D Minor")) {
+        } else if (keyNote.equals("d minor")) {
             key = 293.66;
             isMajor = false;
-        } else if (keyNote.equals("D# Minor") || keyNote.equals("Eb Minor")) {
+        } else if (keyNote.equals("d# minor") || keyNote.equals("eb minor")) {
             key = 311.13;
             isMajor = false;
-        } else if (keyNote.equals("E Minor")) {
+        } else if (keyNote.equals("e minor")) {
             key = 329.63;
             isMajor = false;
-        } else if (keyNote.equals("F Minor")) {
+        } else if (keyNote.equals("f minor")) {
             key = 349.23;
             isMajor = false;
-        } else if (keyNote.equals("F# Minor") || keyNote.equals("Gb Minor")) {
+        } else if (keyNote.equals("f# minor") || keyNote.equals("gb minor")) {
             key = 369.99;
             isMajor = false;
-        } else if (keyNote.equals("G Minor")) {
+        } else if (keyNote.equals("g minor")) {
             key = 392.0;
             isMajor = false;
-        } else if (keyNote.equals("G# Minor") || keyNote.equals("Ab Minor")) {
+        } else if (keyNote.equals("g# minor") || keyNote.equals("ab minor")) {
             key = 415.3;
             isMajor = false;
-        } else if (keyNote.equals("A Minor")) {
+        } else if (keyNote.equals("a minor")) {
             key = 440.0;
             isMajor = false;
-        } else if (keyNote.equals("A# Minor") || keyNote.equals("Bb Minor")) {
+        } else if (keyNote.equals("a# minor") || keyNote.equals("bb minor")) {
             key = 466.16;
             isMajor = false;
-        } else if (keyNote.equals("B Minor")) {
+        } else if (keyNote.equals("b minor")) {
             key = 493.88;
             isMajor = false;
-        } else System.out.println("We love Canada!!!!!!!");
+        } else {
+            System.out.println("Error in input. Key will be set to C Major");
+            key = 261.63;
+            isMajor = true;
+        }
 
         System.out.println("Choose the tempo (65.0-600.0");
         double BPM = scanner.nextDouble();
-        BPM = 60000 / BPM;
-        long tempo = (long) BPM;
+        BPM = 60000 / BPM; // this converts from beat per minute to milliseconds per note
+        long tempo = (long) BPM; //Thread.sleep requires a long
 
         if (startingChord == 1) chord = 1;
         else if (startingChord == 2) chord = 2;
@@ -168,7 +175,7 @@ public class StructuredMelodyPlayer {
         else if (startingChord == 7) chord = 7;
 
         else {
-            // the following if/else statements determine what the first note will be
+            // the following if/else statements determine what the first note will be if it is selected as random
             if (randomDouble <= 0.13) chord = 1;
             else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
             else if (randomDouble > 0.26 && randomDouble <= 0.34) chord = 3;
@@ -178,17 +185,16 @@ public class StructuredMelodyPlayer {
             else chord = 7;
         }
 
-        if (isMajor = true) 
-        {
+        if (isMajor = true) { // this for loop is for major chords
             for (int i = 0; i < musicLength; i++) {
-                // this if loops ensures that the last note will always be C
+                // this if loops ensures that the last note will always be key note
                 if (i == musicLength - 1) {
                     chord = 1;
                 }
                 switch (chord) {
                     case 1: {
                         freq = key;
-                        System.out.println("C");
+                        System.out.println("1");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.13) chord = 1;
                         else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
@@ -206,7 +212,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 2: {
                         freq = key * 1.12;
-                        System.out.println("D");
+                        System.out.println("2");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 5;
                         else chord = 7;
@@ -214,7 +220,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 3: {
                         freq = key * 1.26;
-                        System.out.println("E");
+                        System.out.println("3");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 4;
                         else chord = 6;
@@ -226,7 +232,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 4: {
                         freq = key * 1.33;
-                        System.out.println("F");
+                        System.out.println("4");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.33) chord = 2;
                         else if (randomDouble <= 0.66) chord = 7;
@@ -240,7 +246,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 5: {
                         freq = key * 1.50;
-                        System.out.println("G");
+                        System.out.println("5");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 1;
                         else chord = 6;
@@ -248,7 +254,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 6: {
                         freq = key * 1.68;
-                        System.out.println("A");
+                        System.out.println("6");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 2;
                         else chord = 4;
@@ -256,7 +262,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 7: {
                         freq = key * 1.89;
-                        System.out.println("B");
+                        System.out.println("7");
                         chord = 1;
                         break;
                     }
@@ -265,22 +271,27 @@ public class StructuredMelodyPlayer {
                     }
                 }
                 timeStamp = timeStamp.makeRelative(duration);
-                voice.noteOn(freq, 0.5, timeStamp);
-                Thread.sleep(tempo);
+                voice.noteOn(freq, 0.5, timeStamp); // this actually plays the note
+                Thread.sleep(tempo); // this ensures that the loop waits to repeat until note is played for desired time
             }
         }
-        
+        /* Minor keys and Major keys that share the same letter have a different key signature, however every major key
+         * corresponds to another minor key with an identical ket signature. This principal is used to emulate the sound
+         * of minor keys with minimal additional programming.
+         *
+         * The only difference between this for loop and the previous for loop is the order in which notes are called.
+         */
         else
         {
             for (int i = 0; i < musicLength; i++) {
-                // this if loops ensures that the last note will always be C
+                // this if loops ensures that the last note will always be key note
                 if (i == musicLength - 1) {
                     chord = 1;
                 }
                 switch (chord) {
                     case 6: {
                         freq = key;
-                        System.out.println("C");
+                        System.out.println("1");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.13) chord = 1;
                         else if (randomDouble > 0.13 && randomDouble <= 0.26) chord = 2;
@@ -298,7 +309,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 7: {
                         freq = key * 1.12;
-                        System.out.println("D");
+                        System.out.println("2");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 5;
                         else chord = 7;
@@ -306,7 +317,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 1: {
                         freq = key * 1.26;
-                        System.out.println("E");
+                        System.out.println("3");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 4;
                         else chord = 6;
@@ -318,7 +329,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 2: {
                         freq = key * 1.33;
-                        System.out.println("F");
+                        System.out.println("4");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.33) chord = 2;
                         else if (randomDouble <= 0.66) chord = 7;
@@ -332,7 +343,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 3: {
                         freq = key * 1.50;
-                        System.out.println("G");
+                        System.out.println("5");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 1;
                         else chord = 6;
@@ -340,7 +351,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 4: {
                         freq = key * 1.68;
-                        System.out.println("A");
+                        System.out.println("6");
                         randomDouble = Math.random();
                         if (randomDouble <= 0.50) chord = 2;
                         else chord = 4;
@@ -348,7 +359,7 @@ public class StructuredMelodyPlayer {
                     }
                     case 5: {
                         freq = key * 1.89;
-                        System.out.println("B");
+                        System.out.println("7");
                         chord = 1;
                         break;
                     }
@@ -365,6 +376,6 @@ public class StructuredMelodyPlayer {
     }
     public static void main(String[] args) throws InterruptedException {
         new StructuredMelodyPlayer().play();
-        System.exit(0);
+        System.exit(0); //terminates program
     }
 }

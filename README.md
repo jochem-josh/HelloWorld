@@ -10,3 +10,5 @@ This package is used to generate the sound in the program.
 http://www.softsynth.com/jsyn/
 
 The program is called "StructuredMelodyPlayer"
+
+**NOTE: ANDROID APP IS UNFINISHED**

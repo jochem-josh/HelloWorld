@@ -1,3 +1,28 @@
+/* This Program was made possible through the use of the JSyn sound pack.
+ *
+ * Copyright 2009 Phil Burk, Mobileer Inc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * //////////////////////////////////////////////////////////////////////////
+ *
+ * The purpose of this program is to randomly generate a melody adherent to the rules of
+ * music theory within a given key and a given length.
+ *
+ * Authors: Joshua Jochem, Angela (last name) Zachariah Hunt, Jisoo Kim, and Sangjun (lastname)
+ *
+ * September 15, 2019
+ */
 package com.jsyn.examples;
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
@@ -47,6 +72,26 @@ public class StructuredMelodyPlayer {
         System.out.println("What chord number would you like to start on?");
         System.out.println("If you don't want to choose type enter.");
         int startingChord = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("What key would you like to be in?");
+        String keyNote = scanner.nextLine();
+        Double key = 0.0;
+
+        if (keyNote.equals("C")) key = 261.63;
+        else if (keyNote.equals("C#") || keyNote.equals("Db")) key = 277.18;
+        else if (keyNote.equals("D")) key = 293.66;
+        else if (keyNote.equals("D#") || keyNote.equals("Eb")) key = 311.13;
+        else if (keyNote.equals("E")) key = 329.63;
+        else if (keyNote.equals("F")) key = 349.23;
+        else if (keyNote.equals("F#") || keyNote.equals("Gb")) key = 369.99;
+        else if (keyNote.equals("G")) key = 392.0;
+        else if (keyNote.equals("G#") || keyNote.equals("Ab")) key = 415.3;
+        else if (keyNote.equals("A")) key = 440.0;
+        else if (keyNote.equals("A#") || keyNote.equals("Bb")) key = 466.16;
+        else if (keyNote.equals("B")) key = 493.88;
+        else System.out.println("We love Canada!!!!!!!");
+
 
         if (startingChord == 1) chord = 1;
         else if (startingChord == 2) chord = 2;
@@ -74,7 +119,7 @@ public class StructuredMelodyPlayer {
             }
             switch (chord) {
                 case 1: {
-                    freq = 261.63;
+                    freq = key;
                     System.out.println("C");
                     randomDouble = Math.random();
                     if (randomDouble <= 0.13) chord = 1;
@@ -92,7 +137,7 @@ public class StructuredMelodyPlayer {
                     break;
                 }
                 case 2: {
-                    freq = 293.66;
+                    freq = key * 1.12;
                     System.out.println("D");
                     randomDouble = Math.random();
                     if (randomDouble<=0.50) chord = 5;
@@ -100,7 +145,7 @@ public class StructuredMelodyPlayer {
                     break;
                 }
                 case 3: {
-                    freq = 329.63;
+                    freq = key * 1.26;
                     System.out.println("E");
                     randomDouble = Math.random();
                     if (randomDouble<=0.50) chord = 4;
@@ -112,7 +157,7 @@ public class StructuredMelodyPlayer {
                     break;
                 }
                 case 4: {
-                    freq = 349.23;
+                    freq = key * 1.33;
                     System.out.println("F");
                     randomDouble = Math.random();
                     if (randomDouble<=0.33) chord = 2;
@@ -126,7 +171,7 @@ public class StructuredMelodyPlayer {
                     break;
                 }
                 case 5: {
-                    freq = 392;
+                    freq = key * 1.50;
                     System.out.println("G");
                     randomDouble = Math.random();
                     if (randomDouble<=0.50) chord = 1;
@@ -134,7 +179,7 @@ public class StructuredMelodyPlayer {
                     break;
                 }
                 case 6: {
-                    freq = 440;
+                    freq = key * 1.68;
                     System.out.println("A");
                     randomDouble = Math.random();
                     if (randomDouble<=0.50) chord = 2;
@@ -142,13 +187,13 @@ public class StructuredMelodyPlayer {
                     break;
                 }
                 case 7: {
-                    freq = 493.88;
+                    freq = key * 1.89 ;
                     System.out.println("B");
                     chord = 1;
                     break;
                 }
                 default: {
-                    System.out.println("this shouldn't happen");
+                    System.out.println("We love Canada!!!!!");
                 }
             }
             timeStamp = timeStamp.makeRelative(duration);
@@ -159,5 +204,6 @@ public class StructuredMelodyPlayer {
     }
     public static void main(String[] args) throws InterruptedException {
         new StructuredMelodyPlayer().play();
+        System.exit(0);
     }
 }

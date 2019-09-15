@@ -76,7 +76,12 @@ public class StructuredMelodyPlayer {
 
         System.out.println("What key would you like to be in?");
         String keyNote = scanner.nextLine();
-        Double key = 0.0;
+        double key = 0.0;
+
+        System.out.println("Choose the tempo (65.0-600.0");
+        double BPM = scanner.nextDouble();
+        BPM = 60000/BPM;
+        long tempo = (long)BPM;
 
         if (keyNote.equals("C")) key = 261.63;
         else if (keyNote.equals("C#") || keyNote.equals("Db")) key = 277.18;
@@ -198,7 +203,7 @@ public class StructuredMelodyPlayer {
             }
             timeStamp = timeStamp.makeRelative(duration);
             voice.noteOn(freq, 0.5, timeStamp );
-            Thread.sleep(400);
+            Thread.sleep(tempo);
         }
         voice.noteOff(timeStamp.makeRelative(onTime));
     }

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Melody Generator</string>
+    <string name="question">What (major) key do you want?</string>
+</resources>
